@@ -13,7 +13,7 @@ package gameObjects
 		private var MissileImage:Class;
 		private var missileArt:Bitmap = new MissileImage;
 		public var spawnPartTimer:int = 10;
-		private var speed:Number = Math.random()*2+2
+		private var speed:Number = Math.random() * 2 + 2;
 		
 		public function missile() 
 		{

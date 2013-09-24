@@ -8,8 +8,9 @@ package physics
 	public class wind 
 	{
 		public static var _wind:wind;
+		public var windSpeed:Number = 2;
 		public var windDirection:Number = 0;
-		public var windSpeedX:Number = 0.5;
+		public var windSpeedX:Number = 0;
 		public var windSpeedY:Number = 0.0;
 		
 		private var directionTimer:int = 100 * Math.random() +50;
@@ -20,7 +21,7 @@ package physics
 		}
 		
 		public function Update():void {
-			windSpeedX = Calc.getSpeedXFromrotation(windDirection, 2)
+			
 			if(directionTimer>0){
 				directionTimer--;
 			}else {
@@ -40,6 +41,7 @@ package physics
 			}else {
 				windDirection = 0;
 			}
+			windSpeedX = Calc.getSpeedXFromrotation(windDirection, windSpeed)
 		}
 	}
 }

@@ -24,6 +24,7 @@
     <option allowSourcePathOverlap="False" />
     <option benchmark="False" />
     <option es="False" />
+    <option inline="False" />
     <option locale="" />
     <option loadConfig="" />
     <option optimize="True" />
@@ -54,11 +55,7 @@
     <element path="bin\launcher.swc" />
     <element path="bin\explosion.swc" />
     <element path="bin\missile_Particle.swc" />
-    <element path="lib\bullitPartArt.swc" />
-    <element path="lib\explosion.swc" />
-    <element path="lib\launcher.swc" />
-    <element path="lib\missile_Particle.swc" />
-    <element path="lib\groundExplosion.swc" />
+    <element path="lib\missileCommandLib.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -82,7 +79,7 @@
   </compileTargets>
   <!-- Paths to exclude from the Project Explorer tree -->
   <hiddenPaths>
-    <!-- example: <hidden path="..." /> -->
+    <hidden path="obj" />
   </hiddenPaths>
   <!-- Executed before build -->
   <preBuildCommand />
@@ -92,6 +89,7 @@
   <options>
     <option showHiddenPaths="False" />
     <option testMovie="Default" />
+    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage>

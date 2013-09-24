@@ -9,10 +9,6 @@ package factories
 	public class fectoryMissile extends Sprite
 	{
 		private var missleVar:missile;
-		public function fectoryMissile()
-		{
-			
-		}
 		
 		public function createFectoryMissile(xpos:int,ypos:int):missile 
 		{

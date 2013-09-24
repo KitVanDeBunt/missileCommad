@@ -32,6 +32,7 @@ package
 		private var hits:int = 0;
 		private var hitCount:TextField = new TextField();
 		public var windClass:wind = new wind();
+		private var missileFactory:fectoryMissile = new fectoryMissile();
 		
 		public function Main():void 
 		{
@@ -169,13 +170,8 @@ package
 		}
 		
 		private function launchMissile():void {
-			missileVector.push(fectoryMissile.createFectoryMissile(Math.random()*DisplayWidth-100+50,-100));
-			/*missileVector.push(new missile());
-			missileVector[missileVector.length - 1].x = Math.random()*DisplayWidth-100+50;
-			missileVector[missileVector.length - 1].y = -100;
-			addChild(missileVector[missileVector.length - 1]);*/
-			
-			//addChild(missileVector[missileVector.length - 1])
+			missileVector.push(missileFactory.createFectoryMissile(Math.random()*DisplayWidth-100+50,-100));			
+			addChild(missileVector[missileVector.length - 1])
 		}
 		
 		private function explosionSpawn(xpos:int,ypos:int):void {

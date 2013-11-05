@@ -8,15 +8,15 @@
   <compiler>
     <define append="true">
       <name>CONFIG::debug</name>
-      <value>false</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::release</name>
       <value>true</value>
     </define>
     <define append="true">
+      <name>CONFIG::release</name>
+      <value>false</value>
+    </define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'5-11-2013'</value>
+      <value>'15-10-2013'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -30,24 +30,23 @@
       <name>CONFIG::desktop</name>
       <value>false</value>
     </define>
-    <optimize>true</optimize>
-    <omit-trace-statements>true</omit-trace-statements>
-    <verbose-stacktraces>false</verbose-stacktraces>
+    <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>C:\cloud\Dropbox\dropbox_projects\missileCommand\src</path-element>
+      <path-element>H:\grafity\src</path-element>
       <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>C:\cloud\Dropbox\dropbox_projects\missileCommand\lib\missileCommandLib.swc</path-element>
+      <path-element>H:\grafity\lib\library.swc</path-element>
+      <path-element>H:\grafity\lib\landscape.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>C:\cloud\Dropbox\dropbox_projects\missileCommand\src\Main.as</path-element>
+    <path-element>H:\grafity\src\Main.as</path-element>
   </file-specs>
-  <default-background-color>#000000</default-background-color>
+  <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
     <width>800</width>
-    <height>600</height>
+    <height>800</height>
   </default-size>
 </flex-config>

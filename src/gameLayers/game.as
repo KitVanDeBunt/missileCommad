@@ -7,6 +7,7 @@ package gameLayers
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.media.Sound;
 	import flash.text.TextField;
 	import gameObjects.Bullit;
 	import gameObjects.Explosion;
@@ -31,10 +32,21 @@ package gameLayers
 		private var DisplayHeight:int;
 		private var DisplayWidth:int;
 		private var hits:int = 0;
+		private var score:int = 0;
 		private var hitCount:TextField;
-		public var windClass:wind;
+		public  var windClass:wind;
 		private var missileFactory:fectoryMissile;
-		private var buildings:Vector.<BuildingFactory>;
+		private var buildingFactory:BuildingFactory;
+		private var buildings:Vector.<Sprite>;
+		
+		[Embed(source = "../sound/missile2.mp3")]
+		private var ShootSound:Class;
+		
+		[Embed(source="../sound/explosion_edit.mp3")]
+		private var ExplosionSound:Class;
+		
+		private var shootSound:Sound = new ShootSound();
+		private var explosionSound:Sound = new ExplosionSound();
 		
 		public function Game():void 
 		{
@@ -58,6 +70,13 @@ package gameLayers
 			DisplayHeight = stage.stageHeight;
 		}
 		
+		public function removeEvents():void {
+			//addevents
+			removeEventListener(Event.ENTER_FRAME, loop);
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE , moveMouse);
+			stage.removeEventListener(MouseEvent.CLICK , moveClick);
+		}
+		
 		private function startGame():void {
 			//set/reset variables
 			
@@ -72,7 +91,8 @@ package gameLayers
 			hitCount = new TextField();
 			windClass = new wind();
 			missileFactory = new fectoryMissile();
-			buildings = new Vector.<BuildingFactory>;
+			buildingFactory = new BuildingFactory();
+			buildings = new Vector.<Sprite>;
 			
 			//add buildings
 			addBuildings();
@@ -91,27 +111,29 @@ package gameLayers
 		}
 		
 		private function addBuildings():void {
+			var xPos:int;
+			var yPos:int;
 			for (var i:int = 0; i < 5; i++) 
 			{
-				buildings[buildings.length] = new BuildingFactory();
-				buildings[buildings.length - 1].x = i * 55 + 30;
-				buildings[buildings.length - 1].y =  DisplayHeight;
-				addChild(buildings[buildings.length-1])
+				xPos = i * 55 + 30;
+				var yPos:int = DisplayHeight;
+				buildings.push(buildingFactory.createBuilding(xPos, yPos));
+				addChild(buildings[buildings.length - 1]);
 			}
 			for (var j:int = 0; j < 5; j++) 
 			{
-				buildings[buildings.length] = new BuildingFactory();
-				buildings[buildings.length - 1].x = DisplayWidth -30 -j*55;
-				buildings[buildings.length - 1].y =  DisplayHeight;
-				addChild(buildings[buildings.length-1])
+				xPos = DisplayWidth -30 -j*55;
+				yPos = DisplayHeight;
+				buildings.push(buildingFactory.createBuilding(xPos, yPos));
+				addChild(buildings[buildings.length - 1]);
 			}
 		}
 		
 		private function loop(event:Event):void {
 			windClass.Update();
 			
-			//display
-			hitCount.text = "hitCount =" + hits+" Wind("+windClass.windSpeedX+","+windClass.windSpeedY+")";
+			//display 
+			hitCount.text = "Score: " + score + " HitCount =" + hits + " Wind(" + windClass.windSpeedX + "," + windClass.windSpeedY + ")"; 
 			
 			//misileSpawnTimer
 			if (missileTimer > 0) {
@@ -154,6 +176,8 @@ package gameLayers
 						//remove missile
 						removeChild(missileVector[k]);
 						missileVector.splice(k , 1);
+						//score
+						score++;
 					}
 				}
 			}
@@ -192,6 +216,8 @@ package gameLayers
 						//remove bullit
 						removeChild(missileVector[m]);
 						missileVector.splice(m , 1);
+						//play explosion
+						explosionSound.play();
 						continue;
 					}
 				}
@@ -205,7 +231,7 @@ package gameLayers
 					if (missileVector[m].spawnPartTimer <= 0) {
 						missileVector[m].spawnPartReset();
 						//spawn particle
-						MCspawn(missileVector[m].x,missileVector[m].y,new MCautoRemove(new missileParticle()));
+						MCspawn(missileVector[m].x, missileVector[m].y, new MCautoRemove(new missileParticle()));
 					}
 				}
 				//missile bullit hittest
@@ -220,11 +246,24 @@ package gameLayers
 						//remove bullit
 						removeChild(bullitVector[l]);
 						bullitVector.splice(l , 1);
+						//play explosion
+						explosionSound.play();
+						//score
+						score++;
 					}
 				}
 			}
 			//launcher.loop
 			Launcher.loop();
+			
+			if (hits >= 10) {
+				
+				////////////////////////////////
+				/////////// End Game ///////////
+				////////////////////////////////
+				removeEvents();
+				Main._main.endgame();
+			}
 		}
 		
 		private function launchMissile():void {
@@ -237,6 +276,7 @@ package gameLayers
 			explosionVector[explosionVector.length - 1].x = xpos;
 			explosionVector[explosionVector.length - 1].y = ypos;
 			addChild(explosionVector[explosionVector.length - 1]);
+			explosionSound.play();
 		}
 		
 		//this functions spawns movieclips that are deleted when done playing
@@ -267,7 +307,9 @@ package gameLayers
 		}
 		
 		private function moveClick(m:MouseEvent):void {
-			shoot(m.stageX,m.stageY);
+			shoot(m.stageX, m.stageY);
+			//play explosion
+			shootSound.play();
 		}
 	}
 }

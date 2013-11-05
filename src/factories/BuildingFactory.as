@@ -10,7 +10,7 @@ package factories
 	{
 		private var ranBuilding:int;
 		private var building:MovieClip;
-		public function BuildingFactory() 
+		public function createBuilding(xPos:int,yPos:int):MovieClip 
 		{
 			ranBuilding = Math.random() * 3;
 			switch(ranBuilding) {
@@ -26,7 +26,10 @@ package factories
 			}
 			building.scaleX = 0.5;
 			building.scaleY = 0.5;
-			addChild(building);
+			
+			building.x = xPos;
+			building.y = yPos;
+			return building;
 		}
 		
 		
